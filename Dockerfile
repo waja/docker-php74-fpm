@@ -38,11 +38,8 @@ RUN set -xe; \
   && docker-php-ext-configure bcmath \
   && docker-php-ext-configure exif \
   && docker-php-ext-configure gd \
-    --with-gd \
-    --with-freetype-dir=/usr/include/ \
-    --with-png-dir=/usr/include/ \
-    --with-jpeg-dir=/usr/include/ \
-    --with-freetype-dir=/usr/include/ \
+    --with-freetype \
+    --with-jpeg \
   && pecl install imagick \
   && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
   && docker-php-ext-install -j${NPROC} bcmath exif gd mysqli \
