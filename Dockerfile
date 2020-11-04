@@ -1,7 +1,5 @@
 FROM php:7.4-fpm-alpine
 
-MAINTAINER Jan Wagner <waja@cyconet.org>
-
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG VCS_URL
