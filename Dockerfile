@@ -29,18 +29,19 @@ ENV EXT_DEPS \
   imagemagick-dev \
   libtool
 
+# hadolint ignore=SC2086,DL3017,DL3018
 RUN set -xe; \
   apk --no-cache update && apk --no-cache upgrade \
-  && apk add --no-cache $EXT_DEPS \
-  && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+  && apk add --no-cache ${EXT_DEPS} \
+  && apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} \
   && docker-php-ext-configure bcmath \
   && docker-php-ext-configure exif \
   && docker-php-ext-configure gd \
     --with-freetype \
     --with-jpeg \
   && pecl install imagick \
-  && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
-  && docker-php-ext-install -j${NPROC} bcmath exif gd mysqli \
+  && NPROC="$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1)" \
+  && docker-php-ext-install "-j${NPROC}" bcmath exif gd mysqli \
   && docker-php-ext-enable bcmath exif gd imagick mysqli \
   && apk add --no-cache --virtual .imagick-runtime-deps imagemagick \
   # Cleanup build deps
