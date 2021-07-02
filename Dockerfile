@@ -45,7 +45,7 @@ RUN set -xe; \
   && NPROC="$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1)" \
   && docker-php-ext-install "-j${NPROC}" bcmath exif gd mysqli \
   && docker-php-ext-enable bcmath exif gd imagick mysqli \
-  && apk add --no-cache --virtual .imagick-runtime-deps imagemagick \
+  && apk add --no-cache --virtual .imagick-runtime-deps imagemagick libgomp \
   # Cleanup build deps
   && apk del .build-deps \
   && rm -rf /tmp/* /var/cache/apk/*
